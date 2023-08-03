@@ -11,9 +11,6 @@ const Head = () => {
   }
 
   const handleAddItem = () => {
-    if (inputText.trim() === '') {
-      
-    }
     dispatch({ type: 'ADD_TODO', payload: inputText })
   }
 
