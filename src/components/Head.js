@@ -1,5 +1,12 @@
 import { useContext } from 'react'
-import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet
+} from 'react-native'
+import Toast from 'react-native-root-toast'
 import { Store } from '../store'
 
 const Head = () => {
@@ -11,7 +18,18 @@ const Head = () => {
   }
 
   const handleAddItem = () => {
-    dispatch({ type: 'ADD_TODO', payload: inputText })
+    if (inputText.trim() === '') {
+      let toast = Toast.show('請輸入事項', {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.TOP + 20,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0
+      })
+    } else {
+      dispatch({ type: 'ADD_TODO', payload: inputText.trim() })
+    }
   }
 
   return (
@@ -23,6 +41,7 @@ const Head = () => {
           placeholder='請輸入事項'
           onChangeText={handleInputText}
           style={styles.input}
+          autoCapitalize='none'
         />
         <TouchableOpacity onPress={handleAddItem} style={styles.button}>
           <Text>新增</Text>

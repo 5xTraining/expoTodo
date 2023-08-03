@@ -22,7 +22,8 @@ const reducer = (state, action) => {
             text: action.payload,
             checked: false
           }
-        ]
+        ],
+        inputText: ''
       }
     default:
       return state
