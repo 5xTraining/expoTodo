@@ -18,7 +18,7 @@ const Head = () => {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       <Text style={styles.title}>Todos</Text>
       <View style={styles.inputArea}>
         <TextInput
@@ -31,7 +31,7 @@ const Head = () => {
           <Text>新增</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   )
 }
 
