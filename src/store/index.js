@@ -1,4 +1,5 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
+import * as SecureStore from 'expo-secure-store'
 
 const initialState = {
   inputText: '',
@@ -73,6 +74,8 @@ const reducer = (state, action) => {
         ...state,
         editText: action.payload
       }
+    case 'LOAD_STATE':
+      return action.payload
     default:
       return state
   }
@@ -82,6 +85,23 @@ const Store = createContext(initialState)
 
 const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    const loadData = async () => {
+      const savedState = await SecureStore.getItemAsync('savedState')
+      if (savedState) {
+        dispatch({ type: 'LOAD_STATE', payload: JSON.parse(savedState) })
+      }
+    }
+    loadData()
+  }, [])
+
+  useEffect(() => {
+    const saveData = async () => {
+      await SecureStore.setItemAsync('savedState', JSON.stringify(state))
+    }
+    saveData()
+  }, [state])
 
   return <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>
 }
