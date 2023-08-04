@@ -5,12 +5,13 @@ import {
   View,
   Text,
   StyleSheet,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native'
 import Checkbox from 'expo-checkbox'
 import { Store } from '../store'
 
-const Item = ({ item, onToggleItem }) => (
+const Item = ({ item, onToggleItem, onDeleteItem }) => (
   <View style={styles.item}>
     <View style={styles.checkboxAndText}>
       <Checkbox
@@ -22,6 +23,9 @@ const Item = ({ item, onToggleItem }) => (
         {item.text}
       </Text>
     </View>
+    <TouchableOpacity onPress={onDeleteItem}>
+      <Text style={{ color: '#fff' }}>刪除</Text>
+    </TouchableOpacity>
   </View>
 )
 
@@ -33,8 +37,16 @@ const List = () => {
     dispatch({ type: 'TOGGLE_ITEM', payload: id })
   }
 
+  const handleDeleteItem = (id) => {
+    dispatch({ type: 'DELETE_ITEM', payload: id })
+  }
+
   const renderItem = ({ item }) => (
-    <Item item={item} onToggleItem={() => handleToggleItem(item.id)} />
+    <Item
+      item={item}
+      onToggleItem={() => handleToggleItem(item.id)}
+      onDeleteItem={() => handleDeleteItem(item.id)}
+    />
   )
 
   return (
