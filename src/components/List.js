@@ -12,7 +12,7 @@ import Checkbox from 'expo-checkbox'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Store } from '../store'
 
-const Item = ({ item, onToggleItem, onDeleteItem }) => (
+const Item = ({ item, onToggleItem, onConfirmDelete }) => (
   <View style={styles.item}>
     <View style={styles.checkboxAndText}>
       <Checkbox
@@ -24,7 +24,7 @@ const Item = ({ item, onToggleItem, onDeleteItem }) => (
         {item.text}
       </Text>
     </View>
-    <TouchableOpacity onPress={onDeleteItem}>
+    <TouchableOpacity onPress={onConfirmDelete}>
       <MaterialCommunityIcons name='delete-circle' size={24} color='#ED6070' />
     </TouchableOpacity>
   </View>
@@ -38,15 +38,16 @@ const List = () => {
     dispatch({ type: 'TOGGLE_ITEM', payload: id })
   }
 
-  const handleDeleteItem = (id) => {
-    dispatch({ type: 'DELETE_ITEM', payload: id })
+  const handleConfirmDelete = (id) => {
+    dispatch({ type: 'SET_CHOOSE_ID', payload: id })
+    dispatch({ type: 'SET_MODAL_VISIBLE', payload: { name: 'confirm', visible: true }})
   }
 
   const renderItem = ({ item }) => (
     <Item
       item={item}
       onToggleItem={() => handleToggleItem(item.id)}
-      onDeleteItem={() => handleDeleteItem(item.id)}
+      onConfirmDelete={() => handleConfirmDelete(item.id)}
     />
   )
 

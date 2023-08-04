@@ -2,7 +2,11 @@ import { createContext, useReducer } from 'react'
 
 const initialState = {
   inputText: '',
-  todos: []
+  todos: [],
+  modalVisible: {
+    confirm: false
+  },
+  chooseId: null
 }
 
 const reducer = (state, action) => {
@@ -39,6 +43,19 @@ const reducer = (state, action) => {
         ...state,
         todos: state.todos.filter((todo) => todo.id !== action.payload)
       }
+    case 'SET_CHOOSE_ID':
+      return {
+        ...state,
+        chooseId: action.payload
+      }
+    case 'SET_MODAL_VISIBLE':
+      return {
+        ...state,
+        modalVisible: {
+          ...state.modalVisible,
+          [action.payload.name]: action.payload.visible
+        }
+      }
     default:
       return state
   }
@@ -49,11 +66,7 @@ const Store = createContext(initialState)
 const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  return (
-    <Store.Provider value={{ state, dispatch }}>
-      {children}
-    </Store.Provider>
-  )
+  return <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>
 }
 
 export { Store, StoreProvider }

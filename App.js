@@ -4,6 +4,7 @@ import { RootSiblingParent } from 'react-native-root-siblings'
 import { StoreProvider } from './src/store'
 import Head from './src/components/Head'
 import List from './src/components/List'
+import ConfirmModal from './src/components/ConfirmModal'
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <SafeAreaView style={styles.container}>
           <Head />
           <List />
+          <ConfirmModal />
           <StatusBar style='auto' />
         </SafeAreaView>
       </RootSiblingParent>
