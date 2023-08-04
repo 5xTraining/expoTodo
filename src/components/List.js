@@ -1,11 +1,19 @@
 import { useContext } from 'react'
 import { SafeAreaView, FlatList, View, Text, StyleSheet } from 'react-native'
+import Checkbox from 'expo-checkbox'
 import { Store } from '../store'
 
-const Item = ({ item }) => (
+const Item = ({ item, onToggleItem }) => (
   <View style={styles.item}>
-    <View>
-      <Text style={styles.itemText}>{item.text}</Text>
+    <View style={styles.checkboxAndText}>
+      <Checkbox
+        value={item.checked}
+        onValueChange={onToggleItem}
+        color={item.checked && '#1dee98'}
+      />
+      <Text style={[styles.itemText, item.checked && styles.finishItemText]}>
+        {item.text}
+      </Text>
     </View>
   </View>
 )
@@ -13,7 +21,13 @@ const Item = ({ item }) => (
 const List = () => {
   const { state, dispatch } = useContext(Store)
 
-  const renderItem = ({ item }) => <Item item={item} />
+  const handleToggleItem = (id) => {
+    dispatch({ type: 'TOGGLE_ITEM', payload: id })
+  }
+
+  const renderItem = ({ item }) => (
+    <Item item={item} onToggleItem={() => handleToggleItem(item.id)} />
+  )
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     marginLeft: 10,
-    color: '#fff',
+    color: '#fff'
   },
   finishItemText: {
     textDecorationLine: 'line-through'

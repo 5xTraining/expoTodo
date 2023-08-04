@@ -25,6 +25,15 @@ const reducer = (state, action) => {
         ],
         inputText: ''
       }
+    case 'TOGGLE_ITEM':
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload
+            ? { ...todo, checked: !todo.checked }
+            : todo
+        )
+      }
     default:
       return state
   }
