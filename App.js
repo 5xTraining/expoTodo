@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import { StyleSheet, View, SafeAreaView } from 'react-native'
+import { RootSiblingParent } from 'react-native-root-siblings'
+import { StoreProvider } from './src/store'
+import Head from './src/components/Head'
+import List from './src/components/List'
+import ConfirmModal from './src/components/ConfirmModal'
+import EditModal from './src/components/EditModal'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <StoreProvider>
+      <RootSiblingParent>
+        <SafeAreaView style={styles.container}>
+          <Head />
+          <List />
+          <ConfirmModal />
+          <EditModal />
+          <StatusBar style='auto' />
+        </SafeAreaView>
+      </RootSiblingParent>
+    </StoreProvider>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    backgroundColor: '#42A6DE'
+  }
+})
