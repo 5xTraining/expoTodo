@@ -7,6 +7,7 @@ import {
   StyleSheet
 } from 'react-native'
 import Toast from 'react-native-root-toast'
+import { FontAwesome } from '@expo/vector-icons'
 import { Store } from '../store'
 
 const Head = () => {
@@ -44,7 +45,7 @@ const Head = () => {
           autoCapitalize='none'
         />
         <TouchableOpacity onPress={handleAddItem} style={styles.button}>
-          <Text>新增</Text>
+          <FontAwesome name='plus' size={24} color='#42A6DE' />
         </TouchableOpacity>
       </View>
     </View>

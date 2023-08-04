@@ -9,6 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import Checkbox from 'expo-checkbox'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Store } from '../store'
 
 const Item = ({ item, onToggleItem, onDeleteItem }) => (
@@ -24,7 +25,7 @@ const Item = ({ item, onToggleItem, onDeleteItem }) => (
       </Text>
     </View>
     <TouchableOpacity onPress={onDeleteItem}>
-      <Text style={{ color: '#fff' }}>刪除</Text>
+      <MaterialCommunityIcons name='delete-circle' size={24} color='#ED6070' />
     </TouchableOpacity>
   </View>
 )
