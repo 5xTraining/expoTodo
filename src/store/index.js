@@ -4,9 +4,11 @@ const initialState = {
   inputText: '',
   todos: [],
   modalVisible: {
-    confirm: false
+    confirm: false,
+    edit: false
   },
-  chooseId: null
+  chooseId: null,
+  editText: ''
 }
 
 const reducer = (state, action) => {
@@ -46,7 +48,8 @@ const reducer = (state, action) => {
     case 'SET_CHOOSE_ID':
       return {
         ...state,
-        chooseId: action.payload
+        chooseId: action.payload,
+        editText: state.todos.find((todo) => todo.id === action.payload).text
       }
     case 'SET_MODAL_VISIBLE':
       return {
@@ -55,6 +58,20 @@ const reducer = (state, action) => {
           ...state.modalVisible,
           [action.payload.name]: action.payload.visible
         }
+      }
+    case 'EDIT_ITEM':
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload.id
+            ? { ...todo, text: action.payload.text }
+            : todo
+        )
+      }
+    case 'SET_EDIT_TEXT':
+      return {
+        ...state,
+        editText: action.payload
       }
     default:
       return state

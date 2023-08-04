@@ -12,7 +12,7 @@ import Checkbox from 'expo-checkbox'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Store } from '../store'
 
-const Item = ({ item, onToggleItem, onConfirmDelete }) => (
+const Item = ({ item, onToggleItem, onConfirmDelete, onEditText }) => (
   <View style={styles.item}>
     <View style={styles.checkboxAndText}>
       <Checkbox
@@ -20,7 +20,7 @@ const Item = ({ item, onToggleItem, onConfirmDelete }) => (
         onValueChange={onToggleItem}
         color={item.checked && '#1dee98'}
       />
-      <Text style={[styles.itemText, item.checked && styles.finishItemText]}>
+      <Text onPress={onEditText} style={[styles.itemText, item.checked && styles.finishItemText]}>
         {item.text}
       </Text>
     </View>
@@ -43,11 +43,17 @@ const List = () => {
     dispatch({ type: 'SET_MODAL_VISIBLE', payload: { name: 'confirm', visible: true }})
   }
 
+  const handleEditText = (id) => {
+    dispatch({ type: 'SET_CHOOSE_ID', payload: id })
+    dispatch({ type: 'SET_MODAL_VISIBLE', payload: { name: 'edit', visible: true } })
+  }
+
   const renderItem = ({ item }) => (
     <Item
       item={item}
       onToggleItem={() => handleToggleItem(item.id)}
       onConfirmDelete={() => handleConfirmDelete(item.id)}
+      onEditText={() => handleEditText(item.id)}
     />
   )
 

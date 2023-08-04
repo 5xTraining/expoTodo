@@ -5,6 +5,7 @@ import { StoreProvider } from './src/store'
 import Head from './src/components/Head'
 import List from './src/components/List'
 import ConfirmModal from './src/components/ConfirmModal'
+import EditModal from './src/components/EditModal'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Head />
           <List />
           <ConfirmModal />
+          <EditModal />
           <StatusBar style='auto' />
         </SafeAreaView>
       </RootSiblingParent>
