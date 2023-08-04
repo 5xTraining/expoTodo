@@ -1,5 +1,12 @@
 import { useContext } from 'react'
-import { SafeAreaView, FlatList, View, Text, StyleSheet } from 'react-native'
+import {
+  SafeAreaView,
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  Image
+} from 'react-native'
 import Checkbox from 'expo-checkbox'
 import { Store } from '../store'
 
@@ -20,6 +27,7 @@ const Item = ({ item, onToggleItem }) => (
 
 const List = () => {
   const { state, dispatch } = useContext(Store)
+  const { todos } = state
 
   const handleToggleItem = (id) => {
     dispatch({ type: 'TOGGLE_ITEM', payload: id })
@@ -31,11 +39,21 @@ const List = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={state.todos}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
+      {todos.length > 0 ? (
+        <FlatList
+          data={state.todos}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <View style={styles.emptyWrap}>
+          <Image
+            source={require('../assets/empty-list.png')}
+            style={styles.emptyImage}
+          />
+          <Text style={styles.emptyText}>目前沒有待辦事項</Text>
+        </View>
+      )}
     </SafeAreaView>
   )
 }
